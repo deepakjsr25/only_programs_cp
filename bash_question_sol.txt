@@ -1,0 +1,103 @@
+Compute the Average
+
+Sample Input
+
+4
+1
+2
+9
+8
+Sample Output
+
+5.000
+
+
+read var;
+
+sum=0;
+
+for((i=0;i<var;i++))
+do
+read n;
+sum=$((sum + n)); 
+done
+
+printf "%.3f\n"  $(echo "scale=4;$sum/$var" | bc -l)
+
+#####################################################################################
+
+Functions and Fractals - Recursive Trees - Bash!
+
+declare -A a
+
+# credits to https://github.com/MaskRay/HackerRank/blob/master/shell/fractal-trees-all.sh
+# d - depth
+# l = length
+# r = row
+# c = column
+
+f() {
+    local d=$1 l=$2 r=$3 c=$4
+    [[ $d -eq 0 ]] && return
+    for ((i=l; i; i--)); do
+        a[$((r-i)).$c]=1
+    done
+    ((r -= l))
+    for ((i=l; i; i--)); do
+        a[$((r-i)).$((c-i))]=1
+        a[$((r-i)).$((c+i))]=1
+    done
+    f $((d-1)) $((l/2)) $((r-l)) $((c-l))
+    f $((d-1)) $((l/2)) $((r-l)) $((c+l))
+}
+read n
+f $n 16 63 49
+for ((i=0; i<63; i++)); do
+    for ((j=0; j<100; j++)); do
+        if [[ ${a[$i.$j]} ]]; then
+            printf 1
+        else
+            printf _
+        fi
+    done
+    echo
+done
+
+###############################################################################################
+
+AWK --- syntax awk '/search pattern1/ {Actions}
+     /search pattern2/ {Actions}' file
+
+In the above awk syntax:
+
+search pattern is a regular expression.
+Actions – statement(s) to be performed.
+several patterns and actions are possible in Awk.
+file – Input file.
+Single quotes around program is to avoid shell not to interpret any of its special characters.
+
+link : https://www.thegeekstuff.com/2010/01/awk-introduction-tutorial-7-awk-print-examples/
+
+question 1
+
+Sample Input
+
+A 25 27 50
+B 35 37 75
+C 75 78 80
+D 99 88 76
+Sample Output
+
+A 25 27 50 : FAIL
+B 35 37 75 : FAIL
+C 75 78 80 : B
+D 99 88 76 : A
+
+awk '{total=$2+$3+$4;
+avg=total/3;
+if(avg>=80) grade="A";
+else if(avg>=60 && avg<80) grade ="B";
+else if(avg>=50 && avg<60) grade ="C";
+else grade="FAIL"; print $0,":",grade;}'
+
+######################################################################################################################

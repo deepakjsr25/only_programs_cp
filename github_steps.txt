@@ -1,0 +1,96 @@
+git config --global user.name deepak
+git config --global user.email deepakjsr25@gmail.com
+git config --global user.email
+git config --global user.name
+
+git init 
+ls -lart
+
+git status
+git status -s -> to see modified or unmodified stage ( first  letter in GREEN says file in staging area has been modified and second letter in RED says file has been modified in working directory.
+
+ARCHITECTURE ----
+ 
+      UNTRACKED               UNMODIFIED              MODIFIED              STAGED
+
+           Add the file
+       --------------------------------------------------------------------->
+
+                                    Edit the file
+                                  ---------------------->                                   
+                                                            Stage the file    
+                                                         -------------------->               
+           Remove the file
+       <<---------------------------    
+                                                     Commit
+                                 <<------------------------------------------  
+
+git add -A ->To stage all at once
+
+git commit ---                 |        Alternate -> git add -m "Adding more htmls" 
+ I to type                     | 
+'Esc' + ':' + 'w' + 'q'        | 
+
+git commit -a -m "your message" -> To commit all without staging i.e skip staging.
+
+
+if your file is modified then you can get iit back by -> git checkout  example.html
+it matches with my last commit
+
+To match all files with last commit type -> git commit -f
+
+----------------------------------------------------------
+git log -> tells you whatever you have commited
+git log -p -1
+
+------------------------------------------------------------
+git diff -> compare between last commit and now
+git diff --staged  -> compare between staging area and last commit
+
+
+--------------------
+touch example.html -> to create file
+--------------------
+
+----------------------------------------------------------------------------------------
+git rm --cached example.html -> to delete a file from staging area but keep in working directory. 
+git rm -> to completely remove a file
+---------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------
+touch .gitignore -> do not wnt to track some files
+{ file.ext , *.ext , /file.ext , folder/ }
+---------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------------------
+git branch example_name -> to create a branch
+git branch -> shows current branch you are in
+git checkout example_name -> switches to newly created branch with name "example_name".
+( NOW YOU CAN WORK IN NEWLY CREATED BRANCH WITHOT DISTURBING THE MASTER BRANCH )
+
+git checkout master -> you will again switch to master
+git merge example_name -> to merge example_name in master 
+git checkout -b example_name2 -> to create and switch to anew branch.
+-------------------------------------------------------------------------------------------
+
+
+TILL NOW WE HAVE CREATED A LOCAL REPOSITORY SO WE WILL PUSH IT INTO REMOTE REPOSITORY
+
+git remote add origin git@github.com:deepakjsr25/project1.git ----> (this url "git@github.com:deepakjsr25/project1.git" is named as "origion" to give it a short name)
+git remote
+git remote -v ----> it will tell you from where to ffetch and where to push 
+git push origin master ---> { if you has declared it private yo need to get read write access
+                                 steps - (1)  Go to settings
+                                         (2)  SSH and GPG keys (here we give access of our github account to our computer).
+                                         (3)  click on "generating a new SSH key and adding it to the ssh-agent".
+                                         (4)  Type the command --> ssh-keygen -t ed25519 -C "your_email@example.com" in you git bash ( but replace it first with your email id)
+                                         (5)  Type eval "$(ssh-agent -s)" in git bash
+                                         (6)  ssh-add ~/.ssh/id_ed25519 (your SSH id has been added to SSH Agent)         
+                                         (7) You need to add that SSH key to your github account -> click "Adding a new SSH key to your GitHub account".                                                             (8) Type this command in git bash ~/.ssh/id_ed25519.pub ( cat ~/.ssh/id_ed25519.pub this command will the contents in public key
+                                         (9) click on "new SSH key" , give a title to it and paste the content of public key.
+                                         (10) Type --> git remote set-url "copy the url from SSH in git" 
+                                         (11) finally type --> git -u push origin master
+
+git push -u origin example_branch ---> to push another branch 
